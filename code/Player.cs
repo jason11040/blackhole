@@ -136,6 +136,10 @@ partial class SandboxPlayer : Player
 		{
 			InAir = false;
 		}
+		else
+		{
+			InAir = true;
+		}
 
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );

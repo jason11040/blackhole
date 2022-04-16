@@ -9,8 +9,10 @@ public partial class BlackHoleEnt : ModelEntity
 	public float DeathRadius { get; set; } = 1100f;
 	public float PullSpeed { get; set; }
 	public int Gravity { get; set; }
+	public TimeSince gravUpdate;
+	public TimeSince sinceSpawn;
 
-	public override async void Spawn()
+	public override void Spawn()
 	{
 		base.Spawn();
 		DeleteOthers();
@@ -18,31 +20,51 @@ public partial class BlackHoleEnt : ModelEntity
 		SetupPhysicsFromModel( PhysicsMotionType.Static, false );
 		Scale = 100f;
 		RenderColor = Color.Black;
-		while ( PullSpeed < 100f )
+		sinceSpawn = 0;
+	}
+
+	[Event.Tick.Server]
+	public void GravityUpdate()
+	{
+		if ( gravUpdate > 3f )
 		{
-			await GameTask.DelaySeconds( 1 );
+			gravUpdate = 0;
 			PullSpeed += 0.001f;
 			Gravity = (int)(PullSpeed * 1000);
 			DebugOverlay.ScreenText( "Gravity Speed: " + Gravity.ToString(), 1f );
 		}
+		
 	}
-
-	[Event.Tick]
+	[Event.Tick.Server]
 	public void PullPlayer()
 	{
+		if ( sinceSpawn < 10f ) return;
 		//Log.Info( PullSpeed );
 		var nearEnts = Entity.FindInSphere( Position, PullRadius );
 		{
 			//DebugOverlay.Sphere( Position, PullRadius, Color.Red );
 			foreach ( var ent in nearEnts )
 			{
-				if ( ent is Player )
+				if ( ent is SandboxPlayer )
 				{
-					ent.Position = Vector3.Lerp( ent.Position, Transform.Position, PullSpeed * Time.Delta );
+
+					var player = (SandboxPlayer) ent;
+					Log.Info( player.Name + " is in air:" + player.InAir);
+					if ( !player.InAir )
+					{
+						Log.Info( "Pulling with in air: " + (PullSpeed * 5) );
+						ent.Position = Vector3.Lerp( ent.Position, Transform.Position, (PullSpeed*5) * Time.Delta );
+					}
+					else
+					{
+						Log.Info( "Pulling with: " + PullSpeed );
+						ent.Position = Vector3.Lerp( ent.Position, Transform.Position, PullSpeed * Time.Delta );
+					}
+					
 				}
 				if ( Gravity >= 50f )
 				{
-					Log.Info( "Pull harder" );
+					//Log.Info( "Pull harder" );
 					ent.Position = Vector3.Lerp( ent.Position, Transform.Position, PullSpeed * Time.Delta * 2 );
 				}
 				/*if ( ent.GroundEntity == null )
@@ -57,7 +79,7 @@ public partial class BlackHoleEnt : ModelEntity
 				//DebugOverlay.Sphere( Position, DeathRadius, Color.Blue );
 				foreach ( var ent in nearDeath )
 				{
-					if ( ent is Player )
+					if ( ent is SandboxPlayer )
 					{
 						ent.TakeDamage( DamageInfo.Generic( 1f ) );
 					}
