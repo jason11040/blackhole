@@ -1,0 +1,20 @@
+{
+  "Title": "BlackHole",
+  "Type": "game",
+  "Org": "wogs",
+  "Ident": "blackhole",
+  "Schema": 1,
+  "HasAssets": false,
+  "AssetsPath": "",
+  "ResourcePaths": [],
+  "HasCode": true,
+  "CodePath": "/code/",
+  "RootNamespace": "Sandbox",
+  "Metadata": {
+    "MapList": [],
+    "RankType": 0,
+    "LeaderboardType": 0,
+    "MapSelect": 4,
+    "PerMapRanking": false
+  }
+}
