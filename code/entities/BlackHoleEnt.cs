@@ -28,7 +28,7 @@ public partial class BlackHoleEnt : ModelEntity
 	}
 
 	[Event.Tick]
-	public override void Simulate( Client cl )
+	public void PullPlayer()
 	{
 		//Log.Info( PullSpeed );
 		var nearEnts = Entity.FindInSphere( Position, PullRadius );

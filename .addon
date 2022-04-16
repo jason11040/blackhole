@@ -4,7 +4,7 @@
   "Org": "wogs",
   "Ident": "blackhole",
   "Schema": 1,
-  "HasAssets": false,
+  "HasAssets": true,
   "AssetsPath": "",
   "ResourcePaths": [],
   "HasCode": true,
@@ -14,7 +14,7 @@
     "MapList": [],
     "RankType": 0,
     "LeaderboardType": 0,
-    "MapSelect": 4,
+    "MapSelect": 0,
     "PerMapRanking": false
   }
 }
