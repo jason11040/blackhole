@@ -131,7 +131,7 @@ partial class SandboxPlayer : Player
 		if ( controller != null )
 			EnableSolidCollisions = !controller.HasTag( "noclip" );
 
-		Log.Info( "Grounded: " + (GroundEntity != null) );
+		//Log.Info( "Grounded: " + (GroundEntity != null) );
 		if(GroundEntity == null )
 		{
 			InAir = false;
