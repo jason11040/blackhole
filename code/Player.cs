@@ -7,7 +7,7 @@ partial class SandboxPlayer : Player
 	private DamageInfo lastDamage;
 	[Net, Predicted] public int GravityScale { get; set; }
 	[Net, Predicted] public bool InAir { get; set; }
-	[Net] public bool Stunned { get; set; }
+	[Net] public bool Stunned { get; set; } = false;
 	public TimeSince stuncooldown;
 
 	/// <summary>
@@ -54,8 +54,6 @@ partial class SandboxPlayer : Player
 
 		(Controller as WalkController).DefaultSpeed = 600;
 		(Controller as WalkController).Gravity = 600;
-		stuncooldown = 0;
-
 
 
 		CameraMode = new FirstPersonCamera();
@@ -65,29 +63,22 @@ partial class SandboxPlayer : Player
 
 	public void Stun()
 	{
-		if ( stuncooldown <= 5f )
-		{
-			Stunned = true;
-		}
-
+		Stunned = true;
+		stuncooldown = 0;
 	}
 
 	public override void BuildInput( InputBuilder input )
 	{
-		if(Stunned && stuncooldown <= 5f)
+		if ( Stunned )
 		{
-			//Log.Info( "stunned" );
 			input.StopProcessing = true;
 			input.ClearButtons();
 			input.Clear();
-			Log.Info( stuncooldown );
-		}
-		if ( stuncooldown >= 5f )
-		{
-			Log.Info( "Unstunned" );
-			Stunned = false;
-			stuncooldown = 0;
-			Log.Info( Stunned );
+			if ( stuncooldown >= 5f )
+			{
+				stuncooldown = 0;
+				Stunned = false;
+			}
 			Log.Info( stuncooldown.ToString() );
 		}
 
