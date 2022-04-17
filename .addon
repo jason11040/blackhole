@@ -1,7 +1,7 @@
 {
   "Title": "BlackHole",
   "Type": "game",
-  "Org": "wogs",
+  "Org": "local",
   "Ident": "blackhole",
   "Schema": 1,
   "HasAssets": true,

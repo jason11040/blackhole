@@ -28,7 +28,7 @@ public partial class BlackHoleEnt : ModelEntity
 	[Event.Tick.Server]
 	public void GravityUpdate()
 	{
-		if ( gravUpdate > 5f )
+		if ( gravUpdate > 1f )
 		{
 			gravUpdate = 0;
 			PullSpeed += 0.001f;
