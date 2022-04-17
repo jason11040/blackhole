@@ -51,6 +51,7 @@ partial class SandboxPlayer : Player
 
 		Clothing.DressEntity( this );
 		Inventory.Add( new Fists() );
+		Inventory.Add( new Pistol() );
 
 		(Controller as WalkController).DefaultSpeed = 600;
 		(Controller as WalkController).Gravity = 600;

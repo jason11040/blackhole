@@ -90,12 +90,7 @@ partial class Fists : Weapon
 
 			using ( Prediction.Off() )
 			{
-				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100, 25 )
-					.UsingTraceResult( tr )
-					.WithAttacker( Owner )
-					.WithWeapon( this );
-
-				tr.Entity.TakeDamage( damageInfo );
+				tr.Entity.Position += Vector3.Lerp( tr.Entity.Position, Vector3.Up * 1000f, Time.Delta * 1 );
 			}
 		}
 
