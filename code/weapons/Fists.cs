@@ -88,10 +88,18 @@ partial class Fists : Weapon
 
 			if ( !IsServer ) continue;
 
-			using ( Prediction.Off() )
+			//using ( Prediction.Off() )
+			//{
+				//tr.Entity.Position += Vector3.Lerp( tr.Entity.Position, new Vector3( 0f, 0f, 1f ) * 1000f, Time.Delta * 1 );
+			if (tr.Entity is SandboxPlayer )
 			{
-				tr.Entity.Position += Vector3.Lerp( tr.Entity.Position, Vector3.Up * 1000f, Time.Delta * 1 );
+				Log.Info( "We hitting a player" );
+				tr.Entity.GroundEntity = null;
+				tr.Entity.Velocity = tr.Entity.Velocity.WithZ( 300 );
+
 			}
+				
+			//}
 		}
 
 		return hit;

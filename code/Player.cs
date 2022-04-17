@@ -75,11 +75,7 @@ partial class SandboxPlayer : Player
 			input.StopProcessing = true;
 			input.ClearButtons();
 			input.Clear();
-			if ( stuncooldown >= 5f )
-			{
-				stuncooldown = 0;
-				Stunned = false;
-			}
+			
 			Log.Info( stuncooldown.ToString() );
 		}
 
@@ -239,6 +235,15 @@ partial class SandboxPlayer : Player
 			inventory.SetActiveSlot( i, false );
 
 			break;
+		}
+	}
+	[Event.Tick]
+	public void StunChecker()
+	{
+		if ( Stunned && stuncooldown >= 5f )
+		{
+			stuncooldown = 0;
+			Stunned = false;
 		}
 	}
 
