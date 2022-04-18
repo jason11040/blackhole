@@ -93,7 +93,7 @@ partial class Fists : Weapon
 				//tr.Entity.Position += Vector3.Lerp( tr.Entity.Position, new Vector3( 0f, 0f, 1f ) * 1000f, Time.Delta * 1 );
 			if (tr.Entity is SandboxPlayer )
 			{
-				Log.Info( "We hitting a player" );
+				//Log.Info( "We hitting a player" );
 				tr.Entity.GroundEntity = null;
 				tr.Entity.Velocity = tr.Entity.Velocity.WithZ( 300 );
 

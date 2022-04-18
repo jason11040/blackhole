@@ -10,7 +10,7 @@ public partial class BlackHoleEnt : ModelEntity
 	public float DeathRadius { get; set; } = 1100f;
 	public float PullSpeed { get; set; }
 	public float BHScale { get; set;}
-	public int Gravity { get; set; }
+	[Net] public int Gravity { get; set; }
 	public TimeSince gravUpdate;
 	public TimeSince sinceSpawn;
 
@@ -24,11 +24,22 @@ public partial class BlackHoleEnt : ModelEntity
 		RenderColor = Color.Black;
 		sinceSpawn = 0;
 	}
+	[Event.Tick]
+	public void sendstats(Entity pl)
+	{
+		Log.Info( "looking for player" );
+		if ( pl is SandboxPlayer )
+		{
+			var player = (SandboxPlayer)pl;
+			Gravity = player.GravitySpeed;
+			Log.Info("grav: " + Gravity + " playergrav: " + player.GravitySpeed);
+		}
+	}
 
 	[Event.Tick.Server]
 	public void GravityUpdate()
 	{
-		if ( gravUpdate > 555555555555551f )
+		if ( gravUpdate > 5f )
 		{
 			gravUpdate = 0;
 			PullSpeed += 0.001f;
@@ -43,7 +54,7 @@ public partial class BlackHoleEnt : ModelEntity
 	{
 		if ( sinceSpawn < 10f ) return;
 		//Log.Info( PullSpeed );
-		PullRadius2 = PullRadius2 += 20 * Time.Delta;
+		PullRadius2 = PullRadius2 += 40 * Time.Delta;
 		BHScale = BHScale += 1 * Time.Delta;
 		//DebugOverlay.Sphere( Position, PullRadius2, Color.Red );
 		//Log.Info( PullRadius2 );
@@ -57,7 +68,7 @@ public partial class BlackHoleEnt : ModelEntity
 				{
 					//DebugOverlay.Sphere( Position, 200, Color.Red );
 					var player = (SandboxPlayer)ent;
-
+					sendstats( player );
 					if ( !player.InAir )
 					{
 						//Log.Info( "Pulling with in air: " + (PullSpeed * 5) );
@@ -69,14 +80,9 @@ public partial class BlackHoleEnt : ModelEntity
 						ent.Position = Vector3.Lerp( ent.Position, Position, PullSpeed * Time.Delta );
 					}
 				}
-				if ( Gravity >= 50f )
-				{
-					ent.Position = Vector3.Lerp( ent.Position, Position, PullSpeed * Time.Delta * 2 );
-				}
 			}
 			var nearBH = Entity.FindInSphere( Position, PullRadius2 );
 			{
-				//DebugOverlay.Sphere( Position, DeathRadius, Color.Blue );
 				foreach ( var ent in nearBH )
 				{
 					if ( ent is SandboxPlayer )
@@ -123,6 +129,7 @@ public partial class BlackHoleEnt : ModelEntity
 			return;
 		}
 	}
+
 	public override void Touch( Entity other )
 	{
 		var player = other as Player;

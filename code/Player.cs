@@ -10,6 +10,11 @@ partial class SandboxPlayer : Player
 	[Net] public bool Stunned { get; set; } = false;
 	public TimeSince stuncooldown;
 
+	[Net]
+	public int MaxHealth { get; set; }
+	[Net]
+	public int GravitySpeed { get; set; }
+
 	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
@@ -21,6 +26,8 @@ partial class SandboxPlayer : Player
 	public SandboxPlayer()
 	{
 		Inventory = new Inventory( this );
+		Health = 100;
+		MaxHealth = 100;
 	}
 
 	/// <summary>
@@ -55,7 +62,9 @@ partial class SandboxPlayer : Player
 
 		(Controller as WalkController).DefaultSpeed = 600;
 		(Controller as WalkController).Gravity = 600;
-
+		(Controller as WalkController).SprintSpeed = 600;
+		(Controller as WalkController).AutoJump = true;
+		Health = MaxHealth;
 
 		CameraMode = new FirstPersonCamera();
 
@@ -80,6 +89,16 @@ partial class SandboxPlayer : Player
 		}
 
 		base.BuildInput( input );
+	}
+
+	[Event.Tick]
+	public void StunChecker()
+	{
+		if ( Stunned && stuncooldown >= 3f )
+		{
+			stuncooldown = 0;
+			Stunned = false;
+		}
 	}
 
 	public override void OnKilled()
@@ -237,14 +256,12 @@ partial class SandboxPlayer : Player
 			break;
 		}
 	}
-	[Event.Tick]
-	public void StunChecker()
+	[AdminCmd]
+	public static void Deleteinventory()
 	{
-		if ( Stunned && stuncooldown >= 5f )
-		{
-			stuncooldown = 0;
-			Stunned = false;
-		}
+		var player = ConsoleSystem.Caller.Pawn as SandboxPlayer;
+
+		player?.Inventory.DeleteContents();
 	}
 
 }

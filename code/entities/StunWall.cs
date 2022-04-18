@@ -10,7 +10,7 @@ public partial class StunEntity : BaseTrigger
 		if(cooldown >= 1f )
 		{
 			pl.Stun();
-			Log.Info( pl.Name + " was Stunned" );
+			//Log.Info( pl.Name + " was Stunned" );
 		}
 
 		base.Touch( other );
