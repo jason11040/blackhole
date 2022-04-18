@@ -24,7 +24,7 @@ public partial class BlackHoleEnt : ModelEntity
 		RenderColor = Color.Black;
 		sinceSpawn = 0;
 	}
-	[Event.Tick]
+	/*[Event.Tick]
 	public void sendstats(Entity pl)
 	{
 		Log.Info( "looking for player" );
@@ -34,7 +34,7 @@ public partial class BlackHoleEnt : ModelEntity
 			Gravity = player.GravitySpeed;
 			Log.Info("grav: " + Gravity + " playergrav: " + player.GravitySpeed);
 		}
-	}
+	}*/
 
 	[Event.Tick.Server]
 	public void GravityUpdate()
@@ -68,7 +68,7 @@ public partial class BlackHoleEnt : ModelEntity
 				{
 					//DebugOverlay.Sphere( Position, 200, Color.Red );
 					var player = (SandboxPlayer)ent;
-					sendstats( player );
+					//sendstats( player );
 					if ( !player.InAir )
 					{
 						//Log.Info( "Pulling with in air: " + (PullSpeed * 5) );
@@ -128,6 +128,12 @@ public partial class BlackHoleEnt : ModelEntity
 		{
 			return;
 		}
+	}
+
+	[Event.Tick.Server]
+	public void UpdatePlayerHud()
+	{
+		SandboxHud.UpdateGravityUI( To.Everyone, Gravity );
 	}
 
 	public override void Touch( Entity other )

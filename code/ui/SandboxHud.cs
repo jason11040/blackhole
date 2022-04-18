@@ -5,6 +5,7 @@ using Sandbox.UI;
 [Library]
 public partial class SandboxHud : HudEntity<RootPanel>
 {
+	public static HudStuff hudInfo;
 	public SandboxHud()
 	{
 		if ( !IsClient )
@@ -19,7 +20,12 @@ public partial class SandboxHud : HudEntity<RootPanel>
 		RootPanel.AddChild<KillFeed>();
 		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 		RootPanel.AddChild<Health>();
-		RootPanel.AddChild<HudStuff>();
+		hudInfo = RootPanel.AddChild<HudStuff>();
 		RootPanel.AddChild<InventoryBar>();
+	}
+	[ClientRpc]
+	public static void UpdateGravityUI( int gravspeed )
+	{
+		hudInfo.UpdateGravity( gravspeed );
 	}
 }

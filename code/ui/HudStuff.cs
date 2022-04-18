@@ -16,7 +16,7 @@ namespace Sandbox.ui
 			GravityBar.Style.Dirty();
 		}
 
-		public void Tick( Entity pl )
+		/*public void Tick( Entity pl )
 		{
 			if ( pl is SandboxPlayer )
 			{
@@ -28,6 +28,10 @@ namespace Sandbox.ui
 			}
 
 
+		}*/
+		public void UpdateGravity(int gravspeed)
+		{
+			GravityLabel.Text = $"Gravity Speed: {gravspeed}";
 		}
 
 	}
