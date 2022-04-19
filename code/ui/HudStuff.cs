@@ -5,6 +5,9 @@ namespace Sandbox.ui
 {
 	public class HudStuff : Panel
 	{
+		public Panel StatsBG;
+		public Panel StatsBG2;
+		public Label StatsLabel;
 		public Label GravityLabel;
 		public Panel GravityBar;
 		public Label DistLabel;
@@ -12,11 +15,13 @@ namespace Sandbox.ui
 		public HudStuff()
 		{
 			StyleSheet.Load( "/ui/HudStuff.scss" );
-
-			DistBar = Add.Panel( "Distbar" );
+			StatsBG = Add.Panel( "StatsBG" );
+			StatsBG2 = StatsBG.Add.Panel( "StatsBG2" );
+			DistBar = StatsBG.Add.Panel( "Distbar" );
 			DistLabel = DistBar.Add.Label( "Distance: ", "Dist" );
-			GravityBar = Add.Panel( "gravitybar" );
+			GravityBar = StatsBG.Add.Panel( "gravitybar" );
 			GravityLabel = GravityBar.Add.Label( "Gravity Speed: ", "gravity" );
+			StatsLabel = StatsBG.Add.Label( "BlackHole Settings", "StatsLabel" );
 			GravityBar.Style.Dirty();
 		}
 

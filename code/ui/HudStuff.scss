@@ -8,16 +8,53 @@
     justify-content: center;
     font-family: Roboto;
 
+    .StatsBG {
+        position: absolute;
+        width: 15%;
+        height: 25%;
+        top: 40%;
+        right: 10px;
+        border: 2px solid rgb(255 255 255);
+        background-color: rgba(0 0 0 0.7);
+        border-radius: 5px;
+        border-color: ghostwhite;
+        color: rgb(255, 255, 255);
+    }
+
+    .StatsBG2 {
+        position: absolute;
+        width: 90%;
+        height: 39px;
+        top: -15%;
+        right: 10px;
+        border: 2px solid rgb(255 255 255);
+        background-color: rgba(0 0 0 0.7);
+        border-color: ghostwhite;
+        color: rgb(255, 255, 255);
+        overflow: hidden;
+    }
+
+    .StatsLabel {
+        position: absolute;
+        text-align: center;
+        font-size: 30px;
+        top: -15%;
+        right: 10%;
+        background-color: rgba( rgba(0, 0, 0, 1.0), 0.0 );
+        color: ghostwhite;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
     .gravitybar {
         position: absolute;
-        width: 13%;
+        width: 75%;
         height: 40px;
-        left: 51%;
         top: 2%;
+        left: 1%;
         border: 2px solid rgb(255 255 255);
-        background-color: dodgerblue;
+        background-color: rgba(0 0 0 0.7);
         border-radius: 5px;
-        border-color: deepskyblue;
+        border-color: ghostwhite;
         color: rgb(255, 255, 255);
     }
 
@@ -31,15 +68,15 @@
     }
 
     .Distbar {
-        position: center;
-        width: 9%;
+        position: absolute;
+        width: 60%;
         height: 40px;
-        top: 2%;
-        right: 6%;
+        top: 18%;
+        left: 1%;
         border: 2px solid rgb(255 255 255);
-        background-color: dodgerblue;
+        background-color: rgba(0 0 0 0.7);
         border-radius: 5px;
-        border-color: deepskyblue;
+        border-color: ghostwhite;
         color: rgb(255, 255, 255);
     }
 

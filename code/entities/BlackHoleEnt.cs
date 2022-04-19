@@ -21,6 +21,9 @@ public partial class BlackHoleEnt : ModelEntity
 		DeleteOthers();
 		SetModel( "models/ball/ball.vmdl" );
 		SetupPhysicsFromModel( PhysicsMotionType.Static, false );
+		CollisionGroup = CollisionGroup.Default;
+		SetInteractsAs( CollisionLayer.Water );
+		SetInteractsWith( CollisionLayer.Solid );
 		Scale = BHScale;
 		RenderColor = Color.Black;
 		sinceSpawn = 0;
