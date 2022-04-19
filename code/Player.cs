@@ -85,7 +85,7 @@ partial class SandboxPlayer : Player
 			input.ClearButtons();
 			input.Clear();
 			
-			Log.Info( stuncooldown.ToString() );
+			//Log.Info( stuncooldown.ToString() );
 		}
 
 		base.BuildInput( input );

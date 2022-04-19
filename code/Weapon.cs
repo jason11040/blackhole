@@ -4,8 +4,6 @@ public partial class Weapon : BaseWeapon, IUse
 {
 	public virtual float ReloadTime => 3.0f;
 
-	public PickupTrigger PickupTrigger { get; protected set; }
-
 	[Net, Predicted]
 	public TimeSince TimeSinceReload { get; set; }
 
@@ -19,15 +17,6 @@ public partial class Weapon : BaseWeapon, IUse
 	{
 		base.Spawn();
 
-		PickupTrigger = new PickupTrigger
-		{
-			Parent = this,
-			Position = Position,
-			EnableTouch = true,
-			EnableSelfCollisions = false
-		};
-
-		PickupTrigger.PhysicsBody.AutoSleep = false;
 	}
 
 	public override void ActiveStart( Entity ent )

@@ -4,15 +4,35 @@
 public partial class StunEntity : BaseTrigger
 {
 	public TimeSince cooldown;
-	public override void Touch( Entity other )
+	protected Output OnHurtPlayer { get; set; }
+	protected Output OnHurt { get; set; }
+	[Event.Tick.Server]
+	protected virtual void Touch()
 	{
-		if ( other is not SandboxPlayer pl ) return;
-		if(cooldown >= 1f )
+		if ( !Enabled )
+			return;
+
+		foreach ( var entity in TouchingEntities )
 		{
-			pl.Stun();
-			//Log.Info( pl.Name + " was Stunned" );
+			if ( !entity.IsValid() )
+				continue;
+
+			entity.TakeDamage( DamageInfo.Generic( 1 * Time.Delta ).WithAttacker( this ) );
+			if(cooldown >= 4f )
+			{
+				if ( entity.Tags.Has( "player" ) )
+				{
+					//Log.Info(cooldown.ToString() + entity );
+					OnHurtPlayer.Fire( entity );
+					var player = (SandboxPlayer)entity;
+					player.Stun();
+					cooldown = 0;
+				}
+				else
+				{
+					OnHurt.Fire( entity );
+				}
+			}
 		}
-		other.TakeDamage( DamageInfo.Generic( 20 ).WithAttacker( this ) );
-		base.Touch( other );
 	}
 }
