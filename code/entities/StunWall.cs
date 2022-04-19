@@ -18,7 +18,7 @@ public partial class StunEntity : BaseTrigger
 				continue;
 
 			entity.TakeDamage( DamageInfo.Generic( 1 * Time.Delta ).WithAttacker( this ) );
-			if(cooldown >= 4f )
+			if(cooldown >= 2f )
 			{
 				if ( entity.Tags.Has( "player" ) )
 				{

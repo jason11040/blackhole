@@ -94,7 +94,7 @@ partial class SandboxPlayer : Player
 	[Event.Tick]
 	public void StunChecker()
 	{
-		if ( Stunned && stuncooldown >= 3f )
+		if ( Stunned && stuncooldown >= 1f )
 		{
 			stuncooldown = 0;
 			Stunned = false;
