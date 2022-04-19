@@ -11,6 +11,7 @@ public partial class BlackHoleEnt : ModelEntity
 	public float PullSpeed { get; set; }
 	public float BHScale { get; set;}
 	[Net] public int Gravity { get; set; }
+	[Net] public float Dist { get; set; }
 	public TimeSince gravUpdate;
 	public TimeSince sinceSpawn;
 
@@ -39,7 +40,7 @@ public partial class BlackHoleEnt : ModelEntity
 	[Event.Tick.Server]
 	public void GravityUpdate()
 	{
-		if ( gravUpdate > 5f )
+		if ( gravUpdate > 55555555555555f )
 		{
 			gravUpdate = 0;
 			PullSpeed += 0.001f;
@@ -68,7 +69,9 @@ public partial class BlackHoleEnt : ModelEntity
 				{
 					//DebugOverlay.Sphere( Position, 200, Color.Red );
 					var player = (SandboxPlayer)ent;
-					//sendstats( player );
+					Dist = Vector3.DistanceBetween( ent.Position, Position );
+					Dist = Dist / 100;
+					//Log.Info( Dist.FloorToInt().ToString() );
 					if ( !player.InAir )
 					{
 						//Log.Info( "Pulling with in air: " + (PullSpeed * 5) );
@@ -108,8 +111,11 @@ public partial class BlackHoleEnt : ModelEntity
 					{
 						if ( ent is SandboxPlayer )
 						{
-							ent.TakeDamage( DamageInfo.Generic( 1f ) );
-						}
+						if ( !ent.IsValid() )
+							continue;
+
+						ent.TakeDamage( DamageInfo.Generic( 20 * Time.Delta ).WithAttacker( this ) );
+					}
 					}
 				}
 			}
@@ -133,14 +139,12 @@ public partial class BlackHoleEnt : ModelEntity
 	[Event.Tick.Server]
 	public void UpdatePlayerHud()
 	{
-		SandboxHud.UpdateGravityUI( To.Everyone, Gravity );
+		SandboxHud.UpdateGravityUI( To.Everyone, Gravity, (int)Dist );
 	}
 
 	public override void Touch( Entity other )
 	{
-		var player = other as Player;
-		//Log.Info( "Touched" );
-		other.TakeDamage( DamageInfo.Generic(5f));
+		other.TakeDamage( DamageInfo.Generic( 20 * Time.Delta ).WithAttacker( this ) );
 	}
 	private void DeleteOthers()
 	{

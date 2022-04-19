@@ -12,7 +12,7 @@ public partial class StunEntity : BaseTrigger
 			pl.Stun();
 			//Log.Info( pl.Name + " was Stunned" );
 		}
-
+		other.TakeDamage( DamageInfo.Generic( 20 ).WithAttacker( this ) );
 		base.Touch( other );
 	}
 }

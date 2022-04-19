@@ -24,8 +24,8 @@ public partial class SandboxHud : HudEntity<RootPanel>
 		RootPanel.AddChild<InventoryBar>();
 	}
 	[ClientRpc]
-	public static void UpdateGravityUI( int gravspeed )
+	public static void UpdateGravityUI( int gravspeed, int dist )
 	{
-		hudInfo.UpdateGravity( gravspeed );
+		hudInfo.UpdateGravity( gravspeed, dist );
 	}
 }

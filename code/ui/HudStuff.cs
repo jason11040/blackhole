@@ -7,31 +7,23 @@ namespace Sandbox.ui
 	{
 		public Label GravityLabel;
 		public Panel GravityBar;
+		public Label DistLabel;
+		public Panel DistBar;
 		public HudStuff()
 		{
 			StyleSheet.Load( "/ui/HudStuff.scss" );
 
+			DistBar = Add.Panel( "Distbar" );
+			DistLabel = DistBar.Add.Label( "Distance: ", "Dist" );
 			GravityBar = Add.Panel( "gravitybar" );
 			GravityLabel = GravityBar.Add.Label( "Gravity Speed: ", "gravity" );
 			GravityBar.Style.Dirty();
 		}
 
-		/*public void Tick( Entity pl )
-		{
-			if ( pl is SandboxPlayer )
-			{
-				var player = (SandboxPlayer)pl;
-
-				var gravspeed = player.GravitySpeed;
-
-				GravityLabel.Text = $"Gravity Speed: {gravspeed}";
-			}
-
-
-		}*/
-		public void UpdateGravity(int gravspeed)
+		public void UpdateGravity(int gravspeed, int Dist )
 		{
 			GravityLabel.Text = $"Gravity Speed: {gravspeed}";
+			DistLabel.Text = $"Distance: {Dist}";
 		}
 
 	}
