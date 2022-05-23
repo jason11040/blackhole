@@ -38,9 +38,9 @@ public class InventoryBar : Panel
 			inventoryIcon.Clear();
 			return;
 		}
-
+		var di = DisplayInfo.For( ent );
 		inventoryIcon.TargetEnt = ent;
-		inventoryIcon.Label.Text = ent.ClassInfo.Title;
+		inventoryIcon.Label.Text = di.Name;
 		inventoryIcon.SetClass( "active", player.ActiveChild == ent );
 	}
 

@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-[Library( "weapon_shotgun", Title = "Shotgun", Spawnable = true )]
+[Library( "weapon_shotgun", Title = "Shotgun" )]
 partial class Shotgun : Weapon
 {
 	public override string ViewModelPath => "weapons/rust_pumpshotgun/v_rust_pumpshotgun.vmdl";
@@ -20,7 +20,7 @@ partial class Shotgun : Weapon
 		TimeSincePrimaryAttack = 0;
 		TimeSinceSecondaryAttack = 0;
 
-		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects
@@ -39,7 +39,7 @@ partial class Shotgun : Weapon
 		TimeSincePrimaryAttack = -0.5f;
 		TimeSinceSecondaryAttack = -0.5f;
 
-		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects
@@ -65,10 +65,10 @@ partial class Shotgun : Weapon
 
 		if ( IsLocalPawn )
 		{
-			new Sandbox.ScreenShake.Perlin( 1.0f, 1.5f, 2.0f );
+			//new Sandbox.ScreenShake.Perlin( 1.0f, 1.5f, 2.0f );
 		}
 
-		CrosshairPanel?.CreateEvent( "fire" );
+		//CrosshairPanel?.CreateEvent( "fire" );
 	}
 
 	[ClientRpc]
@@ -79,11 +79,11 @@ partial class Shotgun : Weapon
 		Particles.Create( "particles/pistol_muzzleflash.vpcf", EffectEntity, "muzzle" );
 
 		ViewModelEntity?.SetAnimParameter( "fire_double", true );
-		CrosshairPanel?.CreateEvent( "fire" );
+		//CrosshairPanel?.CreateEvent( "fire" );
 
 		if ( IsLocalPawn )
 		{
-			new Sandbox.ScreenShake.Perlin( 3.0f, 3.0f, 3.0f );
+			//new Sandbox.ScreenShake.Perlin( 3.0f, 3.0f, 3.0f );
 		}
 	}
 

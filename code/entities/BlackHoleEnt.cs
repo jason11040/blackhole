@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-[Library( "ent_blackholeent", Title = "Black Hole", Spawnable = true )]
+[Library( "ent_blackholeent", Title = "Black Hole" )]
 public partial class BlackHoleEnt : ModelEntity
 {
 	public float PullRadius { get; set; } = 40000f;
@@ -43,7 +43,7 @@ public partial class BlackHoleEnt : ModelEntity
 	[Event.Tick.Server]
 	public void GravityUpdate()
 	{
-		if ( gravUpdate > 55555555555555f )
+		if ( gravUpdate > 5f )
 		{
 			gravUpdate = 0;
 			PullSpeed += 0.001f;

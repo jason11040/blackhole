@@ -1,4 +1,7 @@
 ﻿using Sandbox;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 partial class SandboxPlayer : Player
 {
@@ -18,7 +21,7 @@ partial class SandboxPlayer : Player
 	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
-	public Clothing.Container Clothing = new();
+	public ClothingContainer Clothing = new();
 
 	/// <summary>
 	/// Default init
@@ -45,7 +48,7 @@ partial class SandboxPlayer : Player
 
 		Controller = new WalkController();
 		Animator = new StandardPlayerAnimator();
-
+		ReceiveLoadout();
 		if ( DevController is NoclipController )
 		{
 			DevController = null;
@@ -57,8 +60,6 @@ partial class SandboxPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		Clothing.DressEntity( this );
-		Inventory.Add( new Fists() );
-		Inventory.Add( new Pistol() );
 
 		(Controller as WalkController).DefaultSpeed = 600;
 		(Controller as WalkController).Gravity = 600;
@@ -69,6 +70,22 @@ partial class SandboxPlayer : Player
 		CameraMode = new FirstPersonCamera();
 
 		base.Respawn();
+	}
+
+	private void ReceiveLoadout()
+	{
+		var random = new Random();
+		var weapons = TypeLibrary.GetTypes<Weapon>()
+			.Where( weapon => !weapon.IsAbstract );
+		int randweapons = random.Next( weapons.Count());
+		foreach ( var weapon in weapons )
+		{
+			Inventory.Add( TypeLibrary.Create<Weapon>( weapon ) );
+			if(weapon.ToString() == "Weapon" )
+			{
+				Inventory.DeleteContents();
+			}
+		}
 	}
 
 	public void Stun()
@@ -232,7 +249,7 @@ partial class SandboxPlayer : Player
 		base.StartTouch( other );
 	}
 
-	[ServerCmd( "inventory_current" )]
+	[ConCmd.Server( "inventory_current" )]
 	public static void SetInventoryCurrent( string entName )
 	{
 		var target = ConsoleSystem.Caller.Pawn as Player;
@@ -248,7 +265,7 @@ partial class SandboxPlayer : Player
 			if ( !slot.IsValid() )
 				continue;
 
-			if ( !slot.ClassInfo.IsNamed( entName ) )
+			if ( slot.ClassName != entName )
 				continue;
 
 			inventory.SetActiveSlot( i, false );
@@ -256,7 +273,7 @@ partial class SandboxPlayer : Player
 			break;
 		}
 	}
-	[AdminCmd]
+	[ConCmd.Server]
 	public static void Deleteinventory()
 	{
 		var player = ConsoleSystem.Caller.Pawn as SandboxPlayer;

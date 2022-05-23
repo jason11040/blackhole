@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-[Library( "ent_light", Title = "Light", Spawnable = true )]
+[Library( "ent_light", Title = "Light" )]
 public partial class LightEntity : PointLightEntity, IUse
 {
 	public override void Spawn()

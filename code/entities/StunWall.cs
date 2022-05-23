@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-[Library( "ent_stunwall", Title = "Stun Wall", Spawnable = true )]
+[Library( "ent_stunwall", Title = "Stun Wall" )]
 public partial class StunEntity : BaseTrigger
 {
 	public TimeSince cooldown;
